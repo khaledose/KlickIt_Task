@@ -1,0 +1,39 @@
+<div id="app">
+  <nav class="navbar sticky-top navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">KlickIt</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item" *ngIf="state.isLoggedIn">
+        <a href="/products" class="nav-link" routerLink="products">Products</a>
+      </li>
+      <li class="nav-item" *ngIf="state.isLoggedIn">
+        <a href="/requests" class="nav-link" routerLink="requests">Requests</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="!state.isLoggedIn">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a href="/register-admin" class="nav-link" routerLink="register-admin">Register Admin</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login">Login</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="state.isLoggedIn">
+      <li class="nav-item">
+        <h7 class="navbar-text" routerLink="profile">{{ username }}</h7>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <router-outlet>
+    </router-outlet>
+  </div>
+</div>

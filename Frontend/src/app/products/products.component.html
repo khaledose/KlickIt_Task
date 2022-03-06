@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-between align-items-sm-center">
+    <h2 class="display-4" *ngIf="userStateService.state.isLoggedIn">Products</h2>
+
+    <a class="btn btn-primary" href="/add-product" routerLink="add-product" *ngIf="userStateService.state.isAdmin">
+        New Product
+    </a>
+
+</div>
+
+<div class="list-group" *ngFor="let product of products">
+    <div class="list-group-item flex-column align-items-start">
+        <div class="d-flex justify-content-between">
+            <h3 class="mb-1">{{ product.name }}</h3>
+            <h4 class="lead"><strong>Price:</strong> {{ product.price }}$ </h4>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <p class="lead" *ngIf="product.description">
+                <strong>Description:</strong> {{ product.description }}
+            </p>
+            
+        </div>
+
+        <form name="form" (ngSubmit)="createNewRequest(product)" #f="ngForm" *ngIf="userStateService.state.isUser">
+            <div class="alert alert-success" role="alert" *ngIf="f.submitted && isSuccess">
+                Product requested!
+            </div>
+    
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && !isSuccess">
+                Failed to request!
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary">
+                    Request
+                </button>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Quantity</span>
+                    </div>
+                    <input type="number" min="1" placeholder="1" class="form-control" name="quantity" [(ngModel)]="form[product.id.value]" required #quantity="ngModel"/>
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-danger" type="button" (click)="deleteProduct(product)"
+            *ngIf="userStateService.state.isAdmin">
+            Delete
+        </button>
+        
+    </div>
+</div>
+
+<button id="moreBtn" class="btn btn-secondary btn-sm" type="button" (click)="loadMore()" *ngIf="showMore">
+    More
+</button>
+

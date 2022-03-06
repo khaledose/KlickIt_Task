@@ -1,0 +1,48 @@
+<div class="col-md-12">
+    <div class="card card-container">
+        <form *ngIf="!isSuccess" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required
+                    minlength="3" maxlength="20" #name="ngModel" />
+                <div class="alert-danger" *ngIf="name.errors && f.submitted">
+                    <div *ngIf="name.errors['required']">Product Name is required</div>
+                    <div *ngIf="name.errors['minlength']">
+                        Product Name must be at least 3 characters
+                    </div>
+                    <div *ngIf="name.errors['maxlength']">
+                        Product Name must be at most 20 characters
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" name="description" [(ngModel)]="form.description" required
+                    #description="ngModel" />
+                <div class="alert-danger" *ngIf="description.errors && f.submitted">
+                    <div *ngIf="description.errors['required']">Description is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" min="0" class="form-control" name="price" [(ngModel)]="form.price" required
+                    #price="ngModel" />
+                <div class="alert-danger" *ngIf="price.errors && f.submitted">
+                    <div *ngIf="price.errors['required']">Price is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">Create</button>
+            </div>
+
+            <div class="alert alert-warning" *ngIf="f.submitted && !isSuccess">
+                Creation failed!<br />{{ errorMessage }}
+            </div>
+        </form>
+
+        <div class="alert alert-success" *ngIf="isSuccess">
+            Product created successfully!
+        </div>
+    </div>
+</div>
